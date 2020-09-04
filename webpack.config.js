@@ -6,10 +6,11 @@ module.exports =  (env = {production: undefined}) => {
   return {
     entry: './src/app.js',
     output: {
-      path: path.join(__dirname, 'public', 'dist'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
+      chunkFilename: 'bundle.js',
+      path: path.resolve(__dirname, 'public', 'dist'),
     },
-    module: {
+      module: {
       rules: [
         {
           loader: 'babel-loader',
@@ -48,8 +49,6 @@ module.exports =  (env = {production: undefined}) => {
     devtool: env.production ? 'source-map' : 'inline-source-map',
     plugins: [
       new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // all options are optional
         filename: 'styles.css',
         chunkFilename: '[id].css',
         ignoreOrder: false, // Enable to remove warnings about conflicting order
@@ -59,8 +58,17 @@ module.exports =  (env = {production: undefined}) => {
       })
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'public'),
+      output: {
+        filename: '[name]bundle.js',
+        chunkFilename: '[name]bundle.js',
+      },
+      optimization: {
+        splitChunks: {
+          chunks: 'all',
+        },
+      },
       historyApiFallback: true,
+      contentBase: path.join(__dirname, 'public'),
       publicPath: '/dist/'
     }
   }
