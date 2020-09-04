@@ -62,12 +62,6 @@ module.exports =  (env = {production: undefined}) => {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true,
       publicPath: '/dist/'
-    },
-    optimization: {
-      splitChunks: {
-        // include all types of chunks
-        chunks: 'all'
-      }
     }
   }
 }
