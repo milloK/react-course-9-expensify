@@ -58,15 +58,6 @@ module.exports =  (env = {production: undefined}) => {
       })
     ],
     devServer: {
-      output: {
-        filename: '[name]bundle.js',
-        chunkFilename: '[name]bundle.js',
-      },
-      optimization: {
-        splitChunks: {
-          chunks: 'all',
-        },
-      },
       historyApiFallback: true,
       contentBase: path.join(__dirname, 'public'),
       publicPath: '/dist/'
