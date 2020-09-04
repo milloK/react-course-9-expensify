@@ -1,15 +1,12 @@
-// const TerserPlugin = require('terser-webpack-plugin')
-// import TerserPlugin from 'terser-webpack-plugin'
 const { SourceMapDevToolPlugin } = require("webpack")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
 const path = require('path')
 
 module.exports =  (env = {production: undefined}) => {
   return {
     entry: './src/app.js',
     output: {
-      path: path.join(__dirname, 'public'),
+      path: path.join(__dirname, 'public', 'dist'),
       filename: 'bundle.js'
     },
     module: {
@@ -60,23 +57,11 @@ module.exports =  (env = {production: undefined}) => {
       new SourceMapDevToolPlugin({
         filename: "[file].map"
       })
-      // new TerserPlugin({
-      //   terserOptions: {
-      //     compress: argv['optimize-minimize'] // only if -p or --optimize-minimize were passed
-      //   }
-      // })
     ],
     devServer: {
       contentBase: path.join(__dirname, 'public'),
-      historyApiFallback: true
-    },
-    optimization: {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          test: /\.js(\?.*)?$/i,
-        }),
-      ],
+      historyApiFallback: true,
+      publicPath: '/dist/'
     }
   }
 }
